@@ -1,0 +1,151 @@
+#app {
+  min-height: 100vh;
+}
+
+.app-shell {
+  display: grid;
+  grid-template-columns: var(--sidebar-width, 260px) 6px minmax(0, 1fr) 6px var(--tools-width, 380px);
+  min-height: 100vh;
+}
+
+.resize-handle {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  height: 100vh;
+  cursor: col-resize;
+  touch-action: none;
+}
+
+.resize-handle::before {
+  display: block;
+  width: 2px;
+  height: 100%;
+  margin: 0 auto;
+  background: transparent;
+  content: '';
+}
+
+.resize-handle:hover::before,
+body.is-resizing .resize-handle::before {
+  background: var(--accent);
+}
+
+body.is-resizing {
+  cursor: col-resize;
+  user-select: none;
+}
+
+body.is-resizing * {
+  cursor: col-resize !important;
+}
+
+.sidebar,
+.document-panel {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  border-color: var(--line);
+  background: var(--chrome-bg);
+  backdrop-filter: blur(18px);
+}
+
+.content {
+  width: min(100%, 1040px);
+  padding: 34px 36px 80px;
+  margin: 0 auto;
+}
+
+.intro-section,
+.doc-section {
+  scroll-margin-top: 24px;
+}
+
+h1,
+h2,
+h3 {
+  color: var(--ink);
+  font-weight: 760;
+  line-height: 1.08;
+  letter-spacing: 0;
+}
+
+h1 {
+  max-width: 760px;
+  font-size: 46px;
+}
+
+h2 {
+  font-size: 24px;
+}
+
+h3 {
+  font-size: 17px;
+}
+
+p {
+  color: var(--muted-strong);
+}
+
+code {
+  color: var(--ink);
+  overflow-wrap: anywhere;
+  font-size: 12px;
+}
+
+.error-banner {
+  padding: 12px 14px;
+  margin-bottom: 18px;
+  color: var(--rose);
+  background: var(--rose-soft);
+  border: 1px solid rgba(186, 41, 72, 0.22);
+  border-radius: var(--radius);
+}
+
+.empty-schema {
+  padding: 14px;
+  color: var(--muted);
+  background: var(--panel-subtle);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+
+.code-panel {
+  min-height: 180px;
+  max-height: 340px;
+  overflow: auto;
+  padding: 14px;
+  color: var(--code-text);
+  background: var(--code-bg);
+  border-radius: var(--radius);
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+.code-panel code {
+  color: inherit;
+}
+
+.code-panel.compact {
+  min-height: 150px;
+}
+
+.json-code .json-key {
+  color: #7dd3fc;
+}
+
+.json-code .json-string {
+  color: #a7f3d0;
+}
+
+.json-code .json-number {
+  color: #fcd34d;
+}
+
+.json-code .json-boolean {
+  color: #c4b5fd;
+}
+
+.json-code .json-null {
+  color: #fda4af;
+}
