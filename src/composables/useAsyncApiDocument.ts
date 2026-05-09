@@ -20,12 +20,6 @@ import {
   stringValue,
 } from '@/utils/asyncapi'
 
-/**
- * Parses an AsyncAPI document and exposes normalized collections for the viewer.
- *
- * This is intentionally UI-agnostic: components decide how to render channels,
- * messages and schemas, while this composable owns references, aliases and previews.
- */
 export function useAsyncApiDocument() {
   const sourceText = ref(sampleDocument)
   const query = ref('')

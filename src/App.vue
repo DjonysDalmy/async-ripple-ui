@@ -7,7 +7,7 @@ import SidebarNav from '@/components/layout/SidebarNav.vue'
 import ToolsPanel from '@/components/tools/ToolsPanel.vue'
 import { useAsyncApiDocument } from '@/composables/useAsyncApiDocument'
 import { useColorMode } from '@/composables/useColorMode'
-import { useEchoClient } from '@/composables/useEchoClient'
+import { useRealtimeClient } from '@/composables/useRealtimeClient'
 import { useResizablePanels } from '@/composables/useResizablePanels'
 import type { NamedItem, SectionId, ServerOption, SidePanel } from '@/types/asyncapi'
 import { stringValue } from '@/utils/asyncapi'
@@ -23,7 +23,7 @@ const channelVariables = ref<Record<string, string>>({
   atendimentoUuid: '',
   conversaUuid: '',
   departamento: '',
-  canalEchoId: '',
+  channelId: '',
   livro: '',
   code: '',
   documentoKey: '',
@@ -33,7 +33,7 @@ const channelVariables = ref<Record<string, string>>({
 const { colorMode, toggleColorMode } = useColorMode()
 const { shellStyle, startResize } = useResizablePanels()
 const documentState = useAsyncApiDocument()
-const echoClient = useEchoClient(channelVariables, () => {
+const realtimeClient = useRealtimeClient(channelVariables, () => {
   sidePanel.value = 'client'
 })
 
@@ -45,7 +45,7 @@ const navItems = computed(() => [
   { id: 'schemas' as const, label: 'Schemas', icon: Layers3 },
 ])
 
-const echoServerOptions = computed<ServerOption[]>(() =>
+const serverOptions = computed<ServerOption[]>(() =>
   documentState.servers.value
     .map((server) => ({
       key: server.key,
@@ -129,7 +129,7 @@ function resolveTemplateValue(value: string): string {
       :async-document="documentState.asyncDocument.value"
       :channel-variables="channelVariables"
       :channels="documentState.filteredChannels.value"
-      :client-target-for="echoClient.clientTargetFor"
+      :client-target-for="realtimeClient.clientTargetFor"
       :info="documentState.info.value"
       :message-aliases="documentState.messageAliases"
       :message-anchor="documentState.messageAnchor"
@@ -143,7 +143,7 @@ function resolveTemplateValue(value: string): string {
       :servers="documentState.servers.value"
       :summary-for="documentState.summaryFor"
       :top-protocols="documentState.topProtocols.value"
-      @subscribe="echoClient.subscribeDocumentChannel"
+      @subscribe="realtimeClient.subscribeDocumentChannel"
       @update:message-payload-view="documentState.messagePayloadView.value = $event"
       @update-variable="updateChannelVariable"
     />
@@ -151,29 +151,29 @@ function resolveTemplateValue(value: string): string {
     <ResizeHandle label="Resize side panel" target="right" @start="startResize" />
 
     <ToolsPanel
-      :bearer-token="echoClient.bearerToken.value"
-      :client-error="echoClient.clientError.value"
-      :client-events="echoClient.clientEvents.value"
-      :client-status="echoClient.clientStatus.value"
-      :echo-host="echoClient.echoHost.value"
+      :bearer-token="realtimeClient.bearerToken.value"
+      :client-error="realtimeClient.clientError.value"
+      :client-events="realtimeClient.clientEvents.value"
+      :client-status="realtimeClient.clientStatus.value"
+      :server-url="realtimeClient.serverUrl.value"
       :parse-error="documentState.parseResult.value.error"
-      :server-options="echoServerOptions"
+      :server-options="serverOptions"
       :side-panel="sidePanel"
       :source-text="documentState.sourceText.value"
-      :subscribed-channels="echoClient.subscribedChannels.value"
+      :subscribed-channels="realtimeClient.subscribedChannels.value"
       :version="documentState.info.value.version"
-      :wildcard-pattern="echoClient.wildcardPattern.value"
-      @connect="echoClient.connectClient"
-      @disconnect="echoClient.disconnectClient"
+      :wildcard-pattern="realtimeClient.wildcardPattern.value"
+      @connect="realtimeClient.connectClient"
+      @disconnect="realtimeClient.disconnectClient"
       @import="documentState.importDocument"
       @reset="documentState.resetDocument"
-      @subscribe-wildcard="echoClient.subscribeWildcard(documentState.channels.value)"
-      @unsubscribe="echoClient.unsubscribeChannel"
-      @update:bearer-token="echoClient.bearerToken.value = $event"
-      @update:echo-host="echoClient.echoHost.value = $event"
+      @subscribe-wildcard="realtimeClient.subscribeWildcard(documentState.channels.value)"
+      @unsubscribe="realtimeClient.unsubscribeChannel"
+      @update:bearer-token="realtimeClient.bearerToken.value = $event"
+      @update:server-url="realtimeClient.serverUrl.value = $event"
       @update:side-panel="sidePanel = $event"
       @update:source-text="documentState.sourceText.value = $event"
-      @update:wildcard-pattern="echoClient.wildcardPattern.value = $event"
+      @update:wildcard-pattern="realtimeClient.wildcardPattern.value = $event"
     />
   </div>
 </template>

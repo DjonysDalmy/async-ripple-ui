@@ -1,6 +1,6 @@
 import { onBeforeUnmount, ref, type Ref } from 'vue'
 import { io } from 'socket.io-client'
-import type { ChannelItem, ClientEventLog, ClientStatus, EchoChannelKind } from '@/types/asyncapi'
+import type { ChannelItem, ClientEventLog, ClientStatus, ChannelKind } from '@/types/asyncapi'
 import { extractVariables, inferChannelKind } from '@/utils/asyncapi'
 
 interface SocketLike {
@@ -13,15 +13,10 @@ interface SocketLike {
   onevent?: (packet: { data?: unknown[] }) => void
 }
 
-/**
- * Small Socket.IO realtime client used by the documentation surface.
- *
- * It stays protocol-focused: UI panels decide where to display errors and logs.
- */
-export function useEchoClient(channelVariables: Ref<Record<string, string>>, openClientPanel: () => void) {
+export function useRealtimeClient(channelVariables: Ref<Record<string, string>>, openClientPanel: () => void) {
   const clientStatus = ref<ClientStatus>('idle')
   const clientError = ref('')
-  const echoHost = ref('')
+  const serverUrl = ref('')
   const bearerToken = ref('')
   const wildcardPattern = ref('*')
   const subscribedChannels = ref<string[]>([])
@@ -36,7 +31,7 @@ export function useEchoClient(channelVariables: Ref<Record<string, string>>, ope
   function connectClient() {
     clientError.value = ''
 
-    if (!echoHost.value.trim()) {
+    if (!serverUrl.value.trim()) {
       clientStatus.value = 'error'
       clientError.value = 'Choose or enter a Socket.IO server URL before connecting.'
       return
@@ -47,7 +42,7 @@ export function useEchoClient(channelVariables: Ref<Record<string, string>>, ope
     }
 
     clientStatus.value = 'connecting'
-    socket = io(echoHost.value, {
+    socket = io(serverUrl.value, {
       transports: ['websocket', 'polling'],
       autoConnect: true,
     }) as unknown as SocketLike
@@ -176,7 +171,7 @@ export function useEchoClient(channelVariables: Ref<Record<string, string>>, ope
     }
   }
 
-  function subscribeChannel(channel: string, kind: EchoChannelKind) {
+  function subscribeChannel(channel: string, kind: ChannelKind) {
     const wireChannel = normalizeWireChannel(channel, kind)
 
     if (!wireChannel || subscribedChannels.value.includes(wireChannel)) {
@@ -234,7 +229,7 @@ export function useEchoClient(channelVariables: Ref<Record<string, string>>, ope
     ].slice(0, 80)
   }
 
-  function normalizeWireChannel(channel: string, kind?: EchoChannelKind): string {
+  function normalizeWireChannel(channel: string, kind?: ChannelKind): string {
     const cleanChannel = channel.trim()
 
     if (
@@ -274,7 +269,7 @@ export function useEchoClient(channelVariables: Ref<Record<string, string>>, ope
     clientTargetFor,
     connectClient,
     disconnectClient,
-    echoHost,
+    serverUrl,
     subscribeDocumentChannel,
     subscribeWildcard,
     subscribedChannels,

@@ -10,9 +10,6 @@ const TOOLS_WIDTH_KEY = 'async-ripple-ui-tools-width'
 const LEGACY_SIDEBAR_WIDTH_KEY = 'ripple-sidebar-width'
 const LEGACY_TOOLS_WIDTH_KEY = 'ripple-tools-width'
 
-/**
- * Controls the two resizable layout rails and persists the user's preferred widths.
- */
 export function useResizablePanels() {
   const sidebarWidth = ref(clamp(numberFromStorage(SIDEBAR_WIDTH_KEY, LEGACY_SIDEBAR_WIDTH_KEY, 260), SIDEBAR_MIN_WIDTH, SIDEBAR_MAX_WIDTH))
   const toolsWidth = ref(clamp(numberFromStorage(TOOLS_WIDTH_KEY, LEGACY_TOOLS_WIDTH_KEY, 380), TOOLS_MIN_WIDTH, TOOLS_MAX_WIDTH))

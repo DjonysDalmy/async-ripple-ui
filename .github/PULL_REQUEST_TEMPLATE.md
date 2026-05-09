@@ -1,11 +1,7 @@
-## Summary
+## What changed
 
 - 
 
-## Verification
+## Checked
 
 - [ ] `npm run check`
-
-## Notes
-
--

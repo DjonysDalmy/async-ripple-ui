@@ -4,19 +4,19 @@ about: Report a reproducible problem in Async Ripple UI
 labels: bug
 ---
 
-## Description
+## Bug
 
 
-## Steps To Reproduce
+## Reproduce
 
 1.
 2.
 3.
 
-## Expected Behavior
+## Expected
 
 
-## Actual Behavior
+## Actual
 
 
 ## Environment
@@ -25,6 +25,6 @@ labels: bug
 - OS:
 - Node.js:
 
-## AsyncAPI Document
+## AsyncAPI
 
-Please include a minimal document if it is safe to share.
+Include a minimal document when possible.

@@ -7,10 +7,7 @@ labels: enhancement
 ## Problem
 
 
-## Proposed Solution
+## Proposal
 
 
-## Alternatives Considered
-
-
-## Additional Context
+## Notes

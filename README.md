@@ -4,9 +4,9 @@
 
 # Async Ripple UI
 
-Async Ripple UI is a modern AsyncAPI viewer and lightweight realtime client for event-driven APIs.
+AsyncAPI viewer and realtime client for event-driven APIs.
 
-It focuses on contracts for WebSocket and pub/sub architectures: channels, messages, schemas, server definitions, and a small client surface for subscribing to documented channels. Laravel Echo and Laravel-style private/presence channels are important compatibility targets, but the project itself is purpose-general.
+The UI renders channels, messages, schemas and server definitions from AsyncAPI documents. The client connects to Socket.IO servers, subscribes to documented channels, supports wildcard patterns and handles Laravel-style `private-` / `presence-` prefixes when they appear in a contract.
 
 ## Features
 
@@ -16,10 +16,8 @@ It focuses on contracts for WebSocket and pub/sub architectures: channels, messa
 - Resizable navigation and tools panels
 - Source editor with YAML/JSON import
 - Realtime Socket.IO client panel
-- Laravel Echo compatible channel prefixes
 - Subscription by channel or wildcard pattern, including `*`
 - JSON payload highlighting and copy support
-- Production build and CI-ready project structure
 
 ## Requirements
 
@@ -64,7 +62,7 @@ Wildcard examples:
 
 Channels with unresolved variables are skipped until their variables are filled in the channel card.
 
-The client uses `socket.io-client` 4.x. Older Socket.IO 2 based Laravel Echo servers may need compatibility work before production use.
+The client uses `socket.io-client` 4.x.
 
 ## Project Architecture
 
@@ -81,8 +79,6 @@ The client uses `socket.io-client` 4.x. Older Socket.IO 2 based Laravel Echo ser
 
 See `docs/ARCHITECTURE.md` for more detail.
 
-## Open Source
+## License
 
-Async Ripple UI is released under the MIT License. Contributions are welcome; read `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`, and `SECURITY.md` before opening issues or pull requests.
-
-Continuous integration is defined in `.github/workflows/ci.yml` and runs `npm run check`.
+MIT.

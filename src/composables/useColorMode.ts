@@ -4,9 +4,6 @@ import type { ColorMode } from '@/types/asyncapi'
 const COLOR_MODE_KEY = 'async-ripple-ui-color-mode'
 const LEGACY_COLOR_MODE_KEY = 'ripple-color-mode'
 
-/**
- * Owns the persisted theme choice and mirrors it to the root document element.
- */
 export function useColorMode() {
   const colorMode = ref<ColorMode>(initialColorMode())
 

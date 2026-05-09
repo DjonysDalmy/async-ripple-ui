@@ -10,7 +10,7 @@ defineProps<{
   clientError: string
   clientEvents: ClientEventLog[]
   clientStatus: ClientStatus
-  echoHost: string
+  serverUrl: string
   serverOptions: ServerOption[]
   subscribedChannels: string[]
   wildcardPattern: string
@@ -22,14 +22,14 @@ const emit = defineEmits<{
   'subscribe-wildcard': []
   unsubscribe: [channel: string]
   'update:bearer-token': [value: string]
-  'update:echo-host': [value: string]
+  'update:server-url': [value: string]
   'update:wildcard-pattern': [value: string]
 }>()
 
 const copiedEventId = ref<number | null>(null)
 
-function updateEchoHost(event: Event) {
-  emit('update:echo-host', (event.target as HTMLInputElement).value)
+function updateServerUrl(event: Event) {
+  emit('update:server-url', (event.target as HTMLInputElement).value)
 }
 
 function updateBearerToken(event: Event) {
@@ -87,9 +87,9 @@ async function copyText(value: string) {
         <label>
           <span>Document server</span>
           <select
-            :value="serverOptions.find((option) => option.url === echoHost)?.url || ''"
+            :value="serverOptions.find((option) => option.url === serverUrl)?.url || ''"
             :disabled="!serverOptions.length"
-            @change="emit('update:echo-host', ($event.target as HTMLSelectElement).value || echoHost)"
+            @change="emit('update:server-url', ($event.target as HTMLSelectElement).value || serverUrl)"
           >
             <option value="">Manual</option>
             <option v-for="server in serverOptions" :key="server.key" :value="server.url">
@@ -99,7 +99,7 @@ async function copyText(value: string) {
         </label>
         <label>
           <span>Socket.IO server</span>
-          <input :value="echoHost" type="url" placeholder="https://echo.example.com" @input="updateEchoHost" />
+          <input :value="serverUrl" type="url" placeholder="https://realtime.example.com" @input="updateServerUrl" />
         </label>
         <label>
           <span>Bearer token</span>

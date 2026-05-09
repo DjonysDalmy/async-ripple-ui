@@ -1,7 +1,7 @@
 {
   "name": "async-ripple-ui",
   "version": "0.1.0",
-  "description": "Modern AsyncAPI documentation viewer and lightweight realtime client for event-driven APIs.",
+  "description": "AsyncAPI viewer and realtime client for event-driven APIs.",
   "license": "MIT",
   "type": "module",
   "scripts": {
@@ -15,7 +15,7 @@
   "keywords": [
     "asyncapi",
     "event-driven",
-    "laravel-echo",
+    "realtime",
     "socket.io",
     "pubsub",
     "websocket",
